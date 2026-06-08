@@ -1,6 +1,6 @@
 # AI-SPV (Supervisor AI)
 
-> 🧠 **AI Supervisor, Router, Orchestrator, and Aggregator**
+> **AI Supervisor, Router, Orchestrator, and Aggregator**
 
 AI-SPV adalah sebuah *Enterprise AI Platform Router*. Sistem ini tidak memiliki knowledge base secara langsung (bukan *knowledge agent*), melainkan bertugas untuk mengklasifikasikan intent pertanyaan dari user dan meneruskannya (routing) ke *downstream agent* yang tepat (seperti AI-HR, AI-SERVER, AI-FINANCE).
 
@@ -8,7 +8,7 @@ Stack: **Node.js 22** · **Express** · **PostgreSQL** · **OpenAI API** · **Do
 
 ---
 
-## 🏗 Arsitektur
+## Arsitektur
 
 ```text
 Discord / WhatsApp / Web Chat
@@ -30,7 +30,7 @@ AI-HR   AI-SERVER   AI-FINANCE
 
 ---
 
-## 🚀 Cara Setup & Instalasi
+## Cara Setup & Instalasi
 
 ### 1. Prasyarat
 - **Docker & Docker Compose** terinstall.
@@ -78,7 +78,7 @@ Atau Anda bisa membuat tabel tersebut secara manual menggunakan skema yang ada d
 
 ---
 
-## 🏃 Cara Menjalankan
+## Cara Menjalankan
 
 Jalankan seluruh service menggunakan Docker Compose:
 
@@ -97,7 +97,7 @@ docker compose logs -f ai-spv
 
 ---
 
-## 🔗 Cara Menyambungkan AI Lainnya (Downstream Agents)
+## Cara Menyambungkan AI Lainnya (Downstream Agents)
 
 AI-SPV didesain secara modular. Untuk menambahkan agen AI baru (seperti `ai-legal`, `ai-purchasing`, `ai-inventory`) Anda **TIDAK PERLU** memodifikasi source code dari AI-SPV. 
 
@@ -146,5 +146,5 @@ VALUES
     (gen_random_uuid(), 'ai-finance', 'Laporan Keuangan');
 ```
 
-**Selesai! 🎉** 
+**Selesai!** 
 Service AI-SPV memiliki auto-refresh caching setiap 60 detik. Anda tidak perlu merestart AI-SPV. Setelah data di database diperbarui, AI-SPV akan otomatis mengenali agen AI baru dan mulai meneruskan pertanyaan user jika sesuai dengan kapabilitasnya.
