@@ -13,6 +13,9 @@ const knexConfig = {
   migrations: {
     directory: __dirname + '/migrations',
   },
+  seeds: {
+    directory: __dirname + '/seeds',
+  },
 };
 
 export const knex = Knex(knexConfig);
