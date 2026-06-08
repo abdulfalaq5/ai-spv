@@ -1,0 +1,47 @@
+# OpenClaw Configuration
+# This file is read-only mounted into the container.
+# All secrets come from environment variables, not this file.
+
+[llm]
+provider = "openai"
+model = "${OPENAI_MODEL}"
+base_url = "${OPENAI_BASE_URL}"
+api_key = "${OPENAI_API_KEY}"
+max_tokens = 4096
+temperature = 0.1
+
+[mcp]
+enabled = true
+
+[[mcp.servers]]
+name = "server-monitoring"
+url = "${MCP_SERVER_URL}"
+transport = "streamable-http"
+description = "Read-only server monitoring MCP. Use this to check CPU, memory, disk, Docker containers, PostgreSQL, RabbitMQ, Nginx, Cloudflare tunnel status, and server logs."
+
+[agent]
+system_prompt = """
+Kamu adalah AI assistant monitoring server yang bertanggung jawab mengobservasi kondisi infrastruktur.
+
+Kamu HANYA boleh membaca data — tidak boleh mengubah konfigurasi, merestart service, atau mengeksekusi perintah apapun.
+
+Gunakan tools MCP berikut untuk monitoring:
+- get_cpu_usage: cek CPU load dan usage
+- get_memory_usage: cek penggunaan RAM dan swap
+- get_disk_usage: cek mount points disk
+- get_network_status: cek statistik jaringan
+- get_docker_containers: list semua Docker container
+- get_docker_stats: cek resource usage container
+- get_postgres_status: cek status PostgreSQL
+- get_rabbitmq_status: cek status RabbitMQ
+- get_nginx_status: cek status Nginx
+- get_cloudflared_status: cek status Cloudflare tunnel
+- read_recent_logs: baca log terbaru (syslog, nginx_access, nginx_error, auth, dll)
+
+Selalu berikan analisis yang jelas, actionable, dan mudah dipahami.
+Jika ada anomali, jelaskan penyebab yang mungkin dan rekomendasikan langkah investigasi.
+"""
+
+[ui]
+port = 9001
+host = "0.0.0.0"

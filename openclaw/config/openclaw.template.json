@@ -1,0 +1,93 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/home/node/.openclaw/workspace"
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "dmPolicy": "pairing"
+    },
+    "discord": {
+      "enabled": "__DISCORD_ENABLED__",
+      "token": "${DISCORD_BOT_TOKEN}",
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "${DISCORD_ALLOWED_USER_1}",
+        "${DISCORD_ALLOWED_USER_2}",
+        "${DISCORD_ALLOWED_USER_3}",
+        "${DISCORD_ALLOWED_USER_4}",
+        "${DISCORD_ALLOWED_USER_5}"
+      ]
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "ccca5288d47247abee7fbaac3b08abe24134f2791948261c"
+    },
+    "port": 9001,
+    "bind": "lan",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "http": {
+      "endpoints": {
+        "chatCompletions": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "sumopod": {
+        "api": "openai-completions",
+        "baseUrl": "${OPENAI_BASE_URL}",
+        "apiKey": "${OPENAI_API_KEY}",
+        "models": [
+          {
+            "id": "${OPENAI_MODEL}",
+            "name": "${OPENAI_MODEL}"
+          }
+        ]
+      }
+    }
+  },
+  "mcp": {
+    "servers": {
+      "server-monitoring": {
+        "transport": "streamable-http",
+        "url": "http://mcp-monitoring:9000/mcp",
+        "enabled": true
+      }
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "tools": {
+    "profile": "coding",
+    "deny": [
+      "${OPENCLAW_DENIED_TOOL_1}",
+      "${OPENCLAW_DENIED_TOOL_2}",
+      "${OPENCLAW_DENIED_TOOL_3}",
+      "${OPENCLAW_DENIED_TOOL_4}",
+      "${OPENCLAW_DENIED_TOOL_5}",
+      "${OPENCLAW_DENIED_TOOL_6}"
+    ]
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.6.1",
+    "lastTouchedAt": "2026-06-04T07:25:39.830Z"
+  }
+}

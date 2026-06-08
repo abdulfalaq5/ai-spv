@@ -1,0 +1,53 @@
+# Environment variables - NEVER commit these
+.env
+*.env.local
+*.env.production
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+*.js.map
+
+# TypeScript incremental build
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# OpenClaw data (persistent, not for git)
+openclaw/data/
+openclaw/config/agents/
+openclaw/config/completions/
+openclaw/config/devices/
+openclaw/config/identity/
+openclaw/config/memory/
+openclaw/config/plugin-skills/
+openclaw/config/skill-workshop/
+openclaw/config/state/
+openclaw/config/workspace-attestations/
+openclaw/config/workspace/
+openclaw/config/logs/
+openclaw/config/*.bak*
+openclaw/config/*.last-good
+openclaw/config/exec-approvals.json
+openclaw/config/update-check.json

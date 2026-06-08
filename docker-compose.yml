@@ -1,0 +1,107 @@
+# =============================================================================
+# AI-SPV and OpenClaw - Docker Compose
+# =============================================================================
+# Usage:
+#   docker compose up -d
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # OpenClaw - AI Agent Gateway
+  # ---------------------------------------------------------------------------
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw
+    restart: unless-stopped
+    environment:
+      # OpenClaw reads its config from /home/node/openclaw.json
+      OPENCLAW_CONFIG_PATH: /home/node/openclaw.json
+      # Gateway token must match what's inside openclaw.json
+      OPENCLAW_GATEWAY_TOKEN: ccca5288d47247abee7fbaac3b08abe24134f2791948261c
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      OPENAI_MODEL: ${OPENAI_MODEL}
+      IS_CREATED_UPDATE: ${IS_CREATED_UPDATE:-false}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DISCORD_ENABLED: "false"
+      DISCORD_ALERT_CHANNEL_ID: ${DISCORD_ALERT_CHANNEL_ID:-}
+    command: >
+      sh -c "
+      if [ \"$${IS_CREATED_UPDATE}\" = \"true\" ]; then
+        export OPENCLAW_DENIED_TOOL_1='none';
+        export OPENCLAW_DENIED_TOOL_2='none';
+        export OPENCLAW_DENIED_TOOL_3='none';
+        export OPENCLAW_DENIED_TOOL_4='none';
+        export OPENCLAW_DENIED_TOOL_5='none';
+        export OPENCLAW_DENIED_TOOL_6='none';
+      else
+        export OPENCLAW_DENIED_TOOL_1='write';
+        export OPENCLAW_DENIED_TOOL_2='write_file';
+        export OPENCLAW_DENIED_TOOL_3='edit';
+        export OPENCLAW_DENIED_TOOL_4='edit_file';
+        export OPENCLAW_DENIED_TOOL_5='apply_patch';
+        export OPENCLAW_DENIED_TOOL_6='group:runtime';
+      fi;
+      export DISCORD_ALLOWED_USER_1='none';
+      export DISCORD_ALLOWED_USER_2='none';
+      export DISCORD_ALLOWED_USER_3='none';
+      export DISCORD_ALLOWED_USER_4='none';
+      export DISCORD_ALLOWED_USER_5='none';
+      i=1;
+      OLD_IFS=\"$$IFS\";
+      IFS=',';
+      for user in $$DISCORD_ALLOWED_USERS; do
+        if [ $$i -le 5 ]; then
+          export DISCORD_ALLOWED_USER_$$i=\"$$user\";
+        fi;
+        i=$$((i+1));
+      done;
+      IFS=\"$$OLD_IFS\";
+      node /home/node/.openclaw/generate-config.js;
+      exec node openclaw.mjs gateway --allow-unconfigured --bind lan
+      "
+    volumes:
+      # Mount config dir to the path OpenClaw expects: /home/node/.openclaw
+      - ./openclaw/config:/home/node/.openclaw
+    ports:
+      - "${OPENCLAW_PORT:-9001}:9001"
+    networks:
+      - infra_net
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:9001/healthz').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+
+  # ---------------------------------------------------------------------------
+  # AI-SPV (Supervisor AI)
+  # ---------------------------------------------------------------------------
+  ai-spv:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-spv
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+    networks:
+      - infra_net
+
+networks:
+  infra_net:
+    external: true
+    name: infra_net
