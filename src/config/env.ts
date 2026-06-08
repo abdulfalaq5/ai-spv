@@ -4,7 +4,7 @@ import { z } from 'zod';
 config();
 
 const envSchema = z.object({
-  PORT: z.string().default('3000'),
+  PORT: z.string().default('9002'),
   POSTGRES_HOST: z.string().min(1),
   POSTGRES_PORT: z.string().default('5432'),
   POSTGRES_DB: z.string().min(1),

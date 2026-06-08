@@ -5,11 +5,11 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "tsx watch src/app.ts",
-    "build": "tsup src/app.ts --format cjs --clean",
+    "build": "tsc",
     "start": "node dist/app.js",
-    "migrate:make": "knex --knexfile src/database/knex.ts migrate:make",
-    "migrate:latest": "knex --knexfile src/database/knex.ts migrate:latest",
-    "migrate:rollback": "knex --knexfile src/database/knex.ts migrate:rollback"
+    "migrate:make": "knex --knexfile src/database/knex.ts migrate:make -x ts",
+    "migrate:latest": "knex --knexfile dist/database/knex.js migrate:latest",
+    "migrate:rollback": "knex --knexfile dist/database/knex.js migrate:rollback"
   },
   "dependencies": {
     "axios": "^1.7.0",
@@ -27,5 +27,10 @@
     "tsup": "^8.0.2",
     "tsx": "^4.9.0",
     "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

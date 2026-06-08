@@ -1,31 +1,26 @@
 FROM node:22-alpine AS builder
 
-# Enable corepack for pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
 WORKDIR /app
 
-# Install dependencies
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile || pnpm install
+# Install dependencies using npm to avoid pnpm strict build constraints in Docker
+COPY package.json ./
+RUN npm install
 
 # Copy source
 COPY . .
 
 # Build TS
-RUN pnpm run build
+RUN npm run build
 
 FROM node:22-alpine AS runner
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
+COPY package.json ./
+RUN npm install --omit=dev
 
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 9002
 
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]
