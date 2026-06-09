@@ -62,7 +62,7 @@
     "servers": {
       "server-monitoring": {
         "transport": "streamable-http",
-        "url": "http://mcp-monitoring:9000/mcp",
+        "url": "${MCP_MONITORING_URL}",
         "enabled": true
       }
     }

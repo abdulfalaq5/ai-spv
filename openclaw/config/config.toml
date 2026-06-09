@@ -15,7 +15,7 @@ enabled = true
 
 [[mcp.servers]]
 name = "server-monitoring"
-url = "${MCP_SERVER_URL}"
+url = "${MCP_MONITORING_URL}"
 transport = "streamable-http"
 description = "Read-only server monitoring MCP. Use this to check CPU, memory, disk, Docker containers, PostgreSQL, RabbitMQ, Nginx, Cloudflare tunnel status, and server logs."
 

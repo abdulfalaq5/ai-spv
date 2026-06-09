@@ -26,6 +26,7 @@ services:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DISCORD_ENABLED: "false"
       DISCORD_ALERT_CHANNEL_ID: ${DISCORD_ALERT_CHANNEL_ID:-}
+      MCP_MONITORING_URL: ${MCP_MONITORING_URL:-http://mcp-monitoring:9003/mcp}
     command: >
       sh -c "
       if [ \"$${IS_CREATED_UPDATE}\" = \"true\" ]; then
