@@ -18,7 +18,7 @@ export async function seed(knex: Knex): Promise<void> {
         id: crypto.randomUUID(),
         agent_code: agentCode,
         agent_name: "AI Server Monitor",
-        endpoint: "http://ai-server:3000",
+        endpoint: "http://mcp-monitoring:9003",
         description: "Agen AI yang bertugas memantau status server, CPU, memori, disk, docker, nginx, rabbitmq, dan log error sistem.",
         enabled: true,
       }

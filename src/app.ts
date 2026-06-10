@@ -1,6 +1,7 @@
 import express from 'express';
 import { env } from './config/env';
 import askRouter from './routes/ask.route';
+import completionsRouter from './routes/completions.route';
 import { registryService } from './registry/registry.service';
 
 const app = express();
@@ -9,6 +10,7 @@ app.use(express.json());
 
 // Routes
 app.use('/ask', askRouter);
+app.use('/v1', completionsRouter); // OpenAI-compatible endpoint untuk OpenClaw
 
 // Health Endpoint
 app.get('/health', (req, res) => {

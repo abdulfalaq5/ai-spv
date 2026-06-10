@@ -45,14 +45,14 @@
   },
   "models": {
     "providers": {
-      "sumopod": {
+      "ai-spv": {
         "api": "openai-completions",
-        "baseUrl": "${OPENAI_BASE_URL}",
-        "apiKey": "${OPENAI_API_KEY}",
+        "baseUrl": "http://ai-spv:9002/v1",
+        "apiKey": "spv-internal",
         "models": [
           {
-            "id": "${OPENAI_MODEL}",
-            "name": "${OPENAI_MODEL}"
+            "id": "ai-spv",
+            "name": "AI-SPV Router"
           }
         ]
       }
@@ -63,7 +63,7 @@
       "server-monitoring": {
         "transport": "streamable-http",
         "url": "${MCP_MONITORING_URL}",
-        "enabled": true
+        "enabled": false
       }
     }
   },

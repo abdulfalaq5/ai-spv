@@ -8,7 +8,7 @@ export class AgentClient {
   constructor(private endpoint: string) {
     this.client = axios.create({
       baseURL: this.endpoint,
-      timeout: 10000,
+      timeout: 120000, // 2 minutes, LLMs can take a while
       headers: {
         'Content-Type': 'application/json'
       }
