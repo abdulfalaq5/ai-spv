@@ -26,7 +26,8 @@
   "gateway": {
     "mode": "local",
     "auth": {
-      "mode": "none"
+      "mode": "token",
+      "token": "ccca5288d47247abee7fbaac3b08abe24134f2791948261c"
     },
     "port": 9001,
     "bind": "lan",
@@ -48,7 +49,6 @@
       }
     }
   },
-
   "models": {
     "providers": {
       "ai-spv": {
