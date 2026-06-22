@@ -31,6 +31,12 @@
     },
     "port": 9001,
     "bind": "lan",
+    "controlUi": {
+      "allowedOrigins": [
+        "https://hr.motorsights.com",
+        "http://hr.motorsights.com"
+      ]
+    },
     "tailscale": {
       "mode": "off",
       "resetOnExit": false
