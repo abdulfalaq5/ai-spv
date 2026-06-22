@@ -33,8 +33,8 @@
     "bind": "lan",
     "controlUi": {
       "allowedOrigins": [
-        "https://hr.motorsights.com",
-        "http://hr.motorsights.com"
+        "https://smart.motorsights.com",
+        "http://smart.motorsights.com"
       ]
     },
     "tailscale": {

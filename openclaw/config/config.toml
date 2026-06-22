@@ -49,6 +49,6 @@ host = "0.0.0.0"
 [gateway]
   [gateway.controlUi]
     allowedOrigins = [
-      "https://hr.motorsights.com",
-      "http://hr.motorsights.com",
+      "https://smart.motorsights.com",
+      "http://smart.motorsights.com",
     ]
