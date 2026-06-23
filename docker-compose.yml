@@ -99,6 +99,10 @@ services:
       OPENAI_BASE_URL: ${OPENAI_BASE_URL}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+      TELEGRAM_PUBLIC_BOT_TOKEN: ${TELEGRAM_PUBLIC_BOT_TOKEN:-}
+      TELEGRAM_WEBHOOK_SECRET: ${TELEGRAM_WEBHOOK_SECRET:-}
+    ports:
+      - "9002:9002"
     networks:
       - infra_net
 

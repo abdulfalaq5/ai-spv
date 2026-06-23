@@ -34,7 +34,8 @@
     "controlUi": {
       "allowedOrigins": [
         "https://smart.motorsights.com",
-        "http://smart.motorsights.com"
+        "http://smart.motorsights.com",
+        "http://localhost:9001"
       ]
     },
     "tailscale": {

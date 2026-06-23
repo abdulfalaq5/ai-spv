@@ -13,6 +13,13 @@ const envSchema = z.object({
   OPENAI_BASE_URL: z.string().url().optional(),
   OPENAI_API_KEY: z.string().min(1),
   OPENAI_MODEL: z.string().min(1),
+  OPENCLAW_URL: z.string().url().default('http://openclaw:9001'),
+  OPENCLAW_GATEWAY_TOKEN: z.string().optional(),
+  OPENCLAW_NOTIFY_CHANNEL: z.string().default('telegram'),
+  OPENCLAW_NOTIFY_TARGET: z.string().optional(),
+  // Telegram Public Chat Bot (ai-spv direct integration, separate from OpenClaw bot)
+  TELEGRAM_PUBLIC_BOT_TOKEN: z.string().optional(),
+  TELEGRAM_WEBHOOK_SECRET: z.string().optional(),
 });
 
 const _env = envSchema.safeParse(process.env);
