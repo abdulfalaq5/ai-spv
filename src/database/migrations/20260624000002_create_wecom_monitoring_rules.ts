@@ -6,8 +6,8 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('id').primary().defaultTo(knex.fn.uuid());
     // WeCom sender_id yang mengaktifkan monitoring
     table.string('user_id').notNullable();
-    // WeCom chat session untuk pengiriman notifikasi
-    table.string('open_kfid').notNullable();
+    // WeCom chat session untuk pengiriman notifikasi (nullable jika bukan mode KF)
+    table.string('open_kfid').nullable();
     // Email linked dari user_access (nullable: user mungkin belum login email)
     table.string('email').nullable();
     // Metric yang dipantau: cpu | ram | disk

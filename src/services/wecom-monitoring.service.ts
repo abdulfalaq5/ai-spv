@@ -21,7 +21,7 @@ export type MonitoringMetric = 'cpu' | 'ram' | 'disk';
 export interface WeComMonitoringRule {
   id: string;
   user_id: string;
-  open_kfid: string;
+  open_kfid: string | null;
   email: string | null;
   metric: MonitoringMetric;
   threshold: number;
@@ -33,7 +33,7 @@ export interface WeComMonitoringRule {
 
 export interface CreateRuleInput {
   userId: string;
-  openKfid: string;
+  openKfid?: string | null;
   email?: string | null;
   metric: MonitoringMetric;
   threshold: number;
@@ -51,7 +51,7 @@ export class WeComMonitoringService {
     const [rule] = await knex('wecom_monitoring_rules')
       .insert({
         user_id: input.userId,
-        open_kfid: input.openKfid,
+        open_kfid: input.openKfid ?? null,
         email: input.email ?? null,
         metric: input.metric,
         threshold: input.threshold,

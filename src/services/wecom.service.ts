@@ -109,7 +109,7 @@ export class WeComService {
   // userId    : WeCom sender user ID (dari callback)
   // text      : isi pesan yang akan dikirim
   // ---------------------------------------------------------------------------
-  async sendMessage(openKfid: string, userId: string, text: string): Promise<void> {
+  async sendMessage(openKfid: string | null | undefined, userId: string, text: string): Promise<void> {
     if (!this.isConfigured()) {
       log.warn('WeComService tidak terkonfigurasi — skip sendMessage.');
       return;
@@ -127,7 +127,7 @@ export class WeComService {
   // sendAlert — alias khusus untuk alert monitoring (tidak perlu open_kfid user)
   // Menggunakan send API langsung ke user_id atau chat
   // ---------------------------------------------------------------------------
-  async sendAlert(openKfid: string, userId: string, alertText: string): Promise<void> {
+  async sendAlert(openKfid: string | null | undefined, userId: string, alertText: string): Promise<void> {
     return this.sendMessage(openKfid, userId, alertText);
   }
 
@@ -135,7 +135,7 @@ export class WeComService {
   // _send — internal: kirim payload ke WeCom Bot message API
   // ---------------------------------------------------------------------------
   private async _send(
-    openKfid: string,
+    openKfid: string | null | undefined,
     userId: string,
     message: WeComMessage,
     retried = false,
@@ -149,11 +149,14 @@ export class WeComService {
     }
 
     try {
-      const payload = {
+      const payload: any = {
         touser: userId,
-        open_kfid: openKfid,
         ...message,
       };
+
+      if (openKfid) {
+        payload.open_kfid = openKfid;
+      }
 
       const res = await axios.post(
         `${WECOM_API_BASE}/message/send?access_token=${token}`,
