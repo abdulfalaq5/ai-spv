@@ -517,6 +517,27 @@ export class WeComController {
     const info = await wecomService.getBotInfo();
     res.json({ configured: true, bot: info });
   }
+
+  // -------------------------------------------------------------------------
+  // POST /wecom/test-alert — manual test endpoint for WeCom alert notification
+  // -------------------------------------------------------------------------
+  async testAlert(req: Request, res: Response): Promise<void> {
+    const { user_id, message } = req.body;
+
+    if (!user_id || !message) {
+      res.status(400).json({ error: 'user_id dan message wajib diisi dalam request body.' });
+      return;
+    }
+
+    try {
+      // Kita kirim null/undefined untuk openKfid karena ini pengujian non-KF mode
+      await wecomService.sendAlert(null, user_id, message);
+      res.json({ success: true, message: `Alert berhasil dikirim ke user: ${user_id}` });
+    } catch (e: any) {
+      log.error(`Gagal mengirim test alert ke ${user_id}:`, e);
+      res.status(500).json({ error: 'Gagal mengirim pesan', details: e.message });
+    }
+  }
 }
 
 export const wecomController = new WeComController();

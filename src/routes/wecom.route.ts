@@ -10,4 +10,7 @@ router.post('/webhook', wecomController.handleUpdate.bind(wecomController));
 // Admin: status bot
 router.get('/info', wecomController.getBotInfo.bind(wecomController));
 
+// Manual Test endpoint
+router.post('/test-alert', wecomController.testAlert.bind(wecomController));
+
 export default router;
